@@ -12,84 +12,27 @@ window.App = (function(superClass) {
   App.prototype.initialize = function() {
     var deck;
     this.set('deck', deck = new Deck());
-    this.set('playerHand', deck.dealPlayer());
-    this.set('dealerHand', deck.dealDealer());
-    this.get('dealerHand').on('endGame', this.endGame, this);
-    return this.get('playerHand').on('newGame', this.newGame, this);
+    return this.dealHands();
   };
 
   App.prototype.endGame = function() {
     var dHand, pHand;
-    dHand = this.get('dealerHand').scores();
-    pHand = this.get('playerHand').scores();
-    if (dHand[1] < 22) {
-      if (pHand[1] < 22) {
-        if (dHand[1] > pHand[1]) {
-          $('body').css({
-            'background-color': 'red'
-          });
-        }
-        if (dHand[1] < pHand[1]) {
-          $('body').css({
-            'background-color': 'lightgreen'
-          });
-        }
-        if (dHand[1] === pHand[1]) {
-          return $('body').css({
-            'background-color': 'yellow'
-          });
-        }
-      } else {
-        if (dHand[1] > pHand[0]) {
-          $('body').css({
-            'background-color': 'red'
-          });
-        }
-        if (dHand[1] < pHand[0]) {
-          $('body').css({
-            'background-color': 'lightgreen'
-          });
-        }
-        if (dHand[1] === pHand[0]) {
-          return $('body').css({
-            'background-color': 'yellow'
-          });
-        }
-      }
-    } else {
-      if (pHand[1] < 22) {
-        if (dHand[0] > pHand[1]) {
-          $('body').css({
-            'background-color': 'red'
-          });
-        }
-        if (dHand[0] < pHand[1]) {
-          $('body').css({
-            'background-color': 'lightgreen'
-          });
-        }
-        if (dHand[0] === pHand[1]) {
-          return $('body').css({
-            'background-color': 'yellow'
-          });
-        }
-      } else {
-        if (dHand[0] > pHand[0]) {
-          $('body').css({
-            'background-color': 'red'
-          });
-        }
-        if (dHand[0] < pHand[0]) {
-          $('body').css({
-            'background-color': 'lightgreen'
-          });
-        }
-        if (dHand[0] === pHand[0]) {
-          return $('body').css({
-            'background-color': 'yellow'
-          });
-        }
-      }
+    dHand = this.get('dealerHand').maxScore();
+    pHand = this.get('playerHand').maxScore();
+    if (dHand > pHand) {
+      $('body').css({
+        'background-color': 'red'
+      });
+    }
+    if (dHand < pHand) {
+      $('body').css({
+        'background-color': 'lightgreen'
+      });
+    }
+    if (dHand === pHand) {
+      return $('body').css({
+        'background-color': 'yellow'
+      });
     }
   };
 
@@ -99,20 +42,19 @@ window.App = (function(superClass) {
       'background-color': 'white'
     });
     if (this.get('deck').length > 15) {
-      this.set('playerHand', this.get('deck').dealPlayer());
-      this.set('dealerHand', this.get('deck').dealDealer());
-      this.get('dealerHand').on('endGame', this.endGame, this);
-      this.get('playerHand').on('newGame', this.newGame, this);
-      return console.log(this.get('deck').length);
+      return this.dealHands();
     } else {
-      console.log(this.get('deck').length);
       alert('Deck is too small, shuffling!');
       this.set('deck', deck = new Deck());
-      this.set('playerHand', deck.dealPlayer());
-      this.set('dealerHand', deck.dealDealer());
-      this.get('dealerHand').on('endGame', this.endGame, this);
-      return this.get('playerHand').on('newGame', this.newGame, this);
+      return this.dealHands();
     }
+  };
+
+  App.prototype.dealHands = function() {
+    this.set('playerHand', this.get('deck').dealPlayer());
+    this.set('dealerHand', this.get('deck').dealDealer());
+    this.get('dealerHand').on('endGame', this.endGame, this);
+    return this.get('playerHand').on('newGame', this.newGame, this);
   };
 
   return App;

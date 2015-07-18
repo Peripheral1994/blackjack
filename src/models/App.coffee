@@ -4,61 +4,32 @@ class window.App extends Backbone.Model
   initialize: ->
     #if deck has at least 16 cards, don't get a new deck, otherwise, get new deck and tell player deck is shuffled.
     @set 'deck', deck = new Deck()
-    @set 'playerHand', deck.dealPlayer()
-    @set 'dealerHand', deck.dealDealer()
-    @get('dealerHand').on('endGame', @endGame, @)
-    @get('playerHand').on('newGame', @newGame, @)
+    @dealHands()
 
   endGame: ->
-    dHand = @get('dealerHand').scores()
-    pHand = @get('playerHand').scores()
-    if dHand[1] < 22
-      if pHand[1] < 22
-        if dHand[1] > pHand[1]
-          $('body').css('background-color': 'red')
-        if dHand[1] < pHand[1]
-          $('body').css('background-color': 'lightgreen')
-        if dHand[1] == pHand[1]
-          $('body').css('background-color': 'yellow')
-      else 
-        if dHand[1] > pHand[0]
-          $('body').css('background-color': 'red')
-        if dHand[1] < pHand[0]
-          $('body').css('background-color': 'lightgreen')
-        if dHand[1] == pHand[0]
-          $('body').css('background-color': 'yellow')
-    else 
-      if pHand[1] < 22
-        if dHand[0] > pHand[1]
-          $('body').css('background-color': 'red')
-        if dHand[0] < pHand[1]
-          $('body').css('background-color': 'lightgreen')
-        if dHand[0] == pHand[1]
-          $('body').css('background-color': 'yellow')
-      else 
-        if dHand[0] > pHand[0]
-          $('body').css('background-color': 'red')
-        if dHand[0] < pHand[0]
-          $('body').css('background-color': 'lightgreen')
-        if dHand[0] == pHand[0]
-          $('body').css('background-color': 'yellow')
+    dHand = @get('dealerHand').maxScore()
+    pHand = @get('playerHand').maxScore()
+    if dHand > pHand
+      $('body').css('background-color': 'red')
+    if dHand < pHand
+      $('body').css('background-color': 'lightgreen')
+    if dHand == pHand
+      $('body').css('background-color': 'yellow')
 
   newGame: ->
     $('body').css('background-color': 'white')
     if @get('deck').length > 15
+      @dealHands()
+    else
+      alert('Deck is too small, shuffling!')
+      @set 'deck', deck = new Deck()
+      @dealHands()
+
+  dealHands: ->
       @set 'playerHand', @get('deck').dealPlayer()
       @set 'dealerHand', @get('deck').dealDealer()
       @get('dealerHand').on('endGame', @endGame, @)
-      @get('playerHand').on('newGame', @newGame, @)
-      console.log(@get('deck').length) 
-    else
-      console.log(@get('deck').length)
-      alert('Deck is too small, shuffling!')
-      @set 'deck', deck = new Deck()
-      @set 'playerHand', deck.dealPlayer()
-      @set 'dealerHand', deck.dealDealer()
-      @get('dealerHand').on('endGame', @endGame, @)
-      @get('playerHand').on('newGame', @newGame, @)    
+      @get('playerHand').on('newGame', @newGame, @)   
 
 
 

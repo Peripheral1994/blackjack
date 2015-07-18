@@ -45,24 +45,25 @@ window.Hand = (function(superClass) {
     return this.dealerTurn();
   };
 
+  Hand.prototype.maxScore = function() {
+    if (this.scores()[1] < 22) {
+      return this.scores()[1];
+    } else {
+      return this.scores()[0];
+    }
+  };
+
   Hand.prototype.dealerTurn = function() {
     this.at(0).flip();
-    while (this.scores()[0] <= 16 && this.scores()[1] <= 16) {
+    while (this.maxScore() < 17) {
       this.add(this.deck.pop());
     }
-    if (this.scores()[1] < 22) {
+    if (this.maxScore() < 22) {
       return this.trigger('endGame');
     } else {
-      while (this.scores()[0] <= 16) {
-        this.add(this.deck.pop());
-      }
-      if (this.scores()[0] < 22) {
-        return this.trigger('endGame');
-      } else {
-        return $('body').css({
-          'background-color': 'lightgreen'
-        });
-      }
+      return $('body').css({
+        'background-color': 'lightgreen'
+      });
     }
   };
 

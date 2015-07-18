@@ -24,20 +24,20 @@ class window.Hand extends Backbone.Collection
   stand: ->
     @dealerTurn()
 
-    
+  maxScore: ->
+    if @scores()[1] < 22
+      @scores()[1]
+    else
+      @scores()[0]
 
   dealerTurn: ->
     @at(0).flip()
-    while @scores()[0] <= 16 and @scores()[1] <= 16
+    while @maxScore() < 17
       @add(@deck.pop())
-    if @scores()[1] < 22
+    if @maxScore() < 22
       @trigger('endGame')
     else
-      while @scores()[0] <= 16
-        @add(@deck.pop())
-      if @scores()[0] < 22
-        @trigger('endGame')
-      else $('body').css('background-color': 'lightgreen')
+      $('body').css('background-color': 'lightgreen')
 
   newGame: ->
     @trigger('newGame')
