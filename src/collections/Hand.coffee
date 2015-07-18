@@ -5,7 +5,7 @@ class window.Hand extends Backbone.Collection
 
   hit: ->
     @add(@deck.pop())
-    if @scores()[0] > 21 then alert("You busted!")
+    if @scores()[0] > 21 then $('body').css('background-color': 'red')
 
   hasAce: -> @reduce (memo, card) ->
     memo or card.get('value') is 1
@@ -37,7 +37,7 @@ class window.Hand extends Backbone.Collection
         @add(@deck.pop())
       if @scores()[0] < 22
         @trigger('endGame')
-      else alert("Player Wins!")
+      else $('body').css('background-color': 'lightgreen')
 
   
 #trigger 'endGame'

@@ -23,34 +23,70 @@ window.App = (function(superClass) {
     pHand = this.get('playerHand').scores();
     if (dHand[1] < 22) {
       if (pHand[1] < 22) {
-        if (dHand[1] >= pHand[1]) {
-          alert("Dealer Wins!");
+        if (dHand[1] > pHand[1]) {
+          $('body').css({
+            'background-color': 'red'
+          });
         }
         if (dHand[1] < pHand[1]) {
-          return alert("Player Wins");
+          $('body').css({
+            'background-color': 'lightgreen'
+          });
+        }
+        if (dHand[1] === pHand[1]) {
+          return $('body').css({
+            'background-color': 'yellow'
+          });
         }
       } else {
-        if (dHand[1] >= pHand[0]) {
-          alert("Dealer Wins!");
+        if (dHand[1] > pHand[0]) {
+          $('body').css({
+            'background-color': 'red'
+          });
         }
         if (dHand[1] < pHand[0]) {
-          return alert("Player Wins!");
+          $('body').css({
+            'background-color': 'lightgreen'
+          });
+        }
+        if (dHand[1] === pHand[0]) {
+          return $('body').css({
+            'background-color': 'yellow'
+          });
         }
       }
     } else {
       if (pHand[1] < 22) {
-        if (dHand[0] >= pHand[1]) {
-          alert("Dealer Wins!");
+        if (dHand[0] > pHand[1]) {
+          $('body').css({
+            'background-color': 'red'
+          });
         }
         if (dHand[0] < pHand[1]) {
-          return alert("Player Wins");
+          $('body').css({
+            'background-color': 'lightgreen'
+          });
+        }
+        if (dHand[0] === pHand[1]) {
+          return $('body').css({
+            'background-color': 'yellow'
+          });
         }
       } else {
-        if (dHand[0] >= pHand[0]) {
-          alert("Dealer Wins!");
+        if (dHand[0] > pHand[0]) {
+          $('body').css({
+            'background-color': 'red'
+          });
         }
         if (dHand[0] < pHand[0]) {
-          return alert("Player Wins!");
+          $('body').css({
+            'background-color': 'lightgreen'
+          });
+        }
+        if (dHand[0] === pHand[0]) {
+          return $('body').css({
+            'background-color': 'yellow'
+          });
         }
       }
     }

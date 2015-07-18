@@ -19,7 +19,9 @@ window.Hand = (function(superClass) {
   Hand.prototype.hit = function() {
     this.add(this.deck.pop());
     if (this.scores()[0] > 21) {
-      return alert("You busted!");
+      return $('body').css({
+        'background-color': 'red'
+      });
     }
   };
 
@@ -57,7 +59,9 @@ window.Hand = (function(superClass) {
       if (this.scores()[0] < 22) {
         return this.trigger('endGame');
       } else {
-        return alert("Player Wins!");
+        return $('body').css({
+          'background-color': 'lightgreen'
+        });
       }
     }
   };
