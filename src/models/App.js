@@ -14,7 +14,8 @@ window.App = (function(superClass) {
     this.set('deck', deck = new Deck());
     this.set('playerHand', deck.dealPlayer());
     this.set('dealerHand', deck.dealDealer());
-    return this.get('dealerHand').on('endGame', this.endGame, this);
+    this.get('dealerHand').on('endGame', this.endGame, this);
+    return this.get('playerHand').on('newGame', this.newGame, this);
   };
 
   App.prototype.endGame = function() {
@@ -90,6 +91,16 @@ window.App = (function(superClass) {
         }
       }
     }
+  };
+
+  App.prototype.newGame = function() {
+    var deck;
+    alert('Deck is too small, shuffling!');
+    this.set('deck', deck = new Deck());
+    this.set('playerHand', deck.dealPlayer());
+    this.set('dealerHand', deck.dealDealer());
+    this.get('dealerHand').on('endGame', this.endGame, this);
+    return this.get('playerHand').on('newGame', this.newGame, this);
   };
 
   return App;

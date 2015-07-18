@@ -66,6 +66,10 @@ window.Hand = (function(superClass) {
     }
   };
 
+  Hand.prototype.newGame = function() {
+    return this.trigger('newGame');
+  };
+
   return Hand;
 
 })(Backbone.Collection);

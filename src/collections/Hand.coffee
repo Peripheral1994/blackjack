@@ -39,5 +39,7 @@ class window.Hand extends Backbone.Collection
         @trigger('endGame')
       else $('body').css('background-color': 'lightgreen')
 
+  newGame: ->
+    @trigger('newGame')
   
 #trigger 'endGame'
