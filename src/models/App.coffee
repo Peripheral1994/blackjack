@@ -44,10 +44,15 @@ class window.App extends Backbone.Model
           $('body').css('background-color': 'yellow')
 
   newGame: ->
-    # if @get('deck').length > 15
-    #   @set 'playerHand', deck.dealPlayer()
-    #   @set 'dealerHand', deck.dealDealer()
-    # else
+    $('body').css('background-color': 'white')
+    if @get('deck').length > 15
+      @set 'playerHand', @get('deck').dealPlayer()
+      @set 'dealerHand', @get('deck').dealDealer()
+      @get('dealerHand').on('endGame', @endGame, @)
+      @get('playerHand').on('newGame', @newGame, @)
+      console.log(@get('deck').length) 
+    else
+      console.log(@get('deck').length)
       alert('Deck is too small, shuffling!')
       @set 'deck', deck = new Deck()
       @set 'playerHand', deck.dealPlayer()

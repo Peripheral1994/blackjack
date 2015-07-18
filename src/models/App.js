@@ -95,12 +95,24 @@ window.App = (function(superClass) {
 
   App.prototype.newGame = function() {
     var deck;
-    alert('Deck is too small, shuffling!');
-    this.set('deck', deck = new Deck());
-    this.set('playerHand', deck.dealPlayer());
-    this.set('dealerHand', deck.dealDealer());
-    this.get('dealerHand').on('endGame', this.endGame, this);
-    return this.get('playerHand').on('newGame', this.newGame, this);
+    $('body').css({
+      'background-color': 'white'
+    });
+    if (this.get('deck').length > 15) {
+      this.set('playerHand', this.get('deck').dealPlayer());
+      this.set('dealerHand', this.get('deck').dealDealer());
+      this.get('dealerHand').on('endGame', this.endGame, this);
+      this.get('playerHand').on('newGame', this.newGame, this);
+      return console.log(this.get('deck').length);
+    } else {
+      console.log(this.get('deck').length);
+      alert('Deck is too small, shuffling!');
+      this.set('deck', deck = new Deck());
+      this.set('playerHand', deck.dealPlayer());
+      this.set('dealerHand', deck.dealDealer());
+      this.get('dealerHand').on('endGame', this.endGame, this);
+      return this.get('playerHand').on('newGame', this.newGame, this);
+    }
   };
 
   return App;
