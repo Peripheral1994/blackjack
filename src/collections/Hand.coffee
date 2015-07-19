@@ -32,12 +32,15 @@ class window.Hand extends Backbone.Collection
 
   dealerTurn: ->
     @at(0).flip()
-    while @maxScore() < 17
-      @add(@deck.pop())
-    if @maxScore() < 22
-      @trigger('endGame')
-    else
-      $('body').css('background-color': 'lightgreen')
+    if @maxScore() == 21
+      $('h2').text('Dealer Blackjack!')
+    else  
+      while @maxScore() < 17
+        @add(@deck.pop())
+      if @maxScore() < 22
+        @trigger('endGame')
+      else
+        $('body').css('background-color': 'lightgreen')
 
   newGame: ->
     @trigger('newGame')

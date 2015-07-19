@@ -55,15 +55,19 @@ window.Hand = (function(superClass) {
 
   Hand.prototype.dealerTurn = function() {
     this.at(0).flip();
-    while (this.maxScore() < 17) {
-      this.add(this.deck.pop());
-    }
-    if (this.maxScore() < 22) {
-      return this.trigger('endGame');
+    if (this.maxScore() === 21) {
+      return $('h2').text('Dealer Blackjack!');
     } else {
-      return $('body').css({
-        'background-color': 'lightgreen'
-      });
+      while (this.maxScore() < 17) {
+        this.add(this.deck.pop());
+      }
+      if (this.maxScore() < 22) {
+        return this.trigger('endGame');
+      } else {
+        return $('body').css({
+          'background-color': 'lightgreen'
+        });
+      }
     }
   };
 

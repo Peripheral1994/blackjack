@@ -4,7 +4,7 @@
   width: 100px;
   border-radius: 5px;
   height: 140px;
-  margin-right: 20px;
+  margin-right: -70px;
 }
 
 .covered {
@@ -22,7 +22,8 @@
 }
 
 body {
-  background-color: white;
+  background-image: url(http://cdn.coverstand.com/publication/repo32/16806/261018/bg_image.jpg);
+  background-size: 100%;
 }
 
 .hit-button {
@@ -71,5 +72,55 @@ body {
   top:1px;
 }
 
+.newGame-button {
+  background-color:#FF0000;
+  -moz-border-radius:28px;
+  -webkit-border-radius:28px;
+  border-radius:28px;
+  border:1px solid black;
+  display:inline-block;
+  cursor:pointer;
+  color:#ffffff;
+  font-family:Arial;
+  font-size:17px;
+  padding:16px 31px;
+  text-decoration:none; 
+  text-shadow:0px 1px 0px #2f6627;
+}
+.newGame-button:hover {
+  background-color:#5cbf2a;
+}
+.newGame-button:active {
+  postion:relative;
+  top:1px;
+}
 
+.player-hand-container {
+  position:fixed;
+  top:20%;
+  left:30%;
+  margin-bottom:60px;
+}
 
+.dealer-hand-container {
+  position:fixed;
+  top:40%;
+  left:30%;
+  margin-top:60px;
+}
+
+h2 {
+   background-color:#FF0000;
+  -moz-border-radius:28px;
+  -webkit-border-radius:28px;
+  border-radius:28px;
+  border:1px solid black;
+  display:inline-block;
+  color:#ffffff;
+  font-family:Arial;
+  font-size:17px;
+  padding:16px 31px;
+  margin-left:90px;
+  text-decoration:none; 
+  text-shadow:0px 1px 0px #2f6627;
+}

@@ -11,6 +11,8 @@ window.App = (function(superClass) {
 
   App.prototype.initialize = function() {
     var deck;
+    this.playerMoney = 1000;
+    this.bet = 0;
     this.set('deck', deck = new Deck());
     return this.dealHands();
   };
@@ -19,20 +21,20 @@ window.App = (function(superClass) {
     var dHand, pHand;
     dHand = this.get('dealerHand').maxScore();
     pHand = this.get('playerHand').maxScore();
-    if (dHand > pHand) {
-      $('body').css({
-        'background-color': 'red'
-      });
-    }
-    if (dHand < pHand) {
-      $('body').css({
-        'background-color': 'lightgreen'
-      });
-    }
-    if (dHand === pHand) {
-      return $('body').css({
-        'background-color': 'yellow'
-      });
+    if (pHand === 21 && this.get('playerHand').length === 2) {
+      return $('h2').text('Player Blackjack!');
+    } else {
+      if (dHand > pHand) {
+        $('h2').text('Dealer Wins!');
+      }
+      if (dHand < pHand) {
+        $('h2').text('Player Wins!');
+        this.playerMoney += this.bet * 2;
+      }
+      if (dHand === pHand) {
+        $('h2').text('You Push!');
+        return this.playerMoney += this.bet;
+      }
     }
   };
 
@@ -51,10 +53,23 @@ window.App = (function(superClass) {
   };
 
   App.prototype.dealHands = function() {
+    this.makeBet();
     this.set('playerHand', this.get('deck').dealPlayer());
     this.set('dealerHand', this.get('deck').dealDealer());
     this.get('dealerHand').on('endGame', this.endGame, this);
     return this.get('playerHand').on('newGame', this.newGame, this);
+  };
+
+  App.prototype.makeBet = function() {
+    this.bet = parseInt(prompt("How much money would you like to bet? You have " + this.playerMoney + " dollars."));
+    if (typeof this.bet === "number") {
+      if (this.bet > this.playerMoney) {
+        alert('You don\'t have that much money. Please try again!');
+        return this.makeBet();
+      } else {
+        return this.playermoney -= this.bet;
+      }
+    }
   };
 
   return App;
